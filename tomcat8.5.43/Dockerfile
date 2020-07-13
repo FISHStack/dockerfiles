@@ -1,14 +1,16 @@
-FROM lypgcs/java8:v192
+#FROM lypgcs/java8:v192
+FROM registry.cn-hangzhou.aliyuncs.com/dragonwell/dragonwell8:8.1.1-GA_alpine_x86_64_8u222-b67
 #此镜像使用alpine-glibc系统，精简jdk,只运行java程序，无法编译/构建
 MAINTAINER liangyuanpeng:2019/7/13
-ENV VERSION=8.5.43
+#ENV VERSION=8.5.43
+ENV VERSION=8.5.50
 ENV CATALINA_HOME /usr/local/tomcat
 ENV PATH $CATALINA_HOME/bin:$PATH
+# -Xms1g \
+# -Xmx1g  \
+# -Xss512k \
+# -Xmn500m \
 ENV CATALINA_OPTS=" \
--Xms1g \
--Xmx1g  \
--Xss512k \
--Xmn500m \
 -XX:MetaspaceSize=128m  \
 -XX:MaxMetaspaceSize=512m \
 -Xloggc:$CATALINA_HOME/logs/gc.log \
@@ -49,15 +51,16 @@ RUN apk add --no-cache --virtual=build-dependencies wget
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  \
 && echo "Asia/Shanghai" > /etc/timezone 
 RUN apk del tzdata
-#RUN wget http://mirrors.shu.edu.cn/apache/tomcat/tomcat-8/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz \
-RUN wget https://www-eu.apache.org/dist/tomcat/tomcat-8/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz \
+# RUN wget http://mirrors.shu.edu.cn/apache/tomcat/tomcat-8/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz \
+#RUN wget https://www-eu.apache.org/dist/tomcat/tomcat-8/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz \
+RUN wget https://smartoilets.cn/files/apache-tomcat-${VERSION}.tar.gz \
 && tar zxf apache-tomcat-${VERSION}.tar.gz \
 && mv apache-tomcat-${VERSION} $CATALINA_HOME \
 && apk del build-dependencies \
 && rm -rf apache-tomcat-${VERSION}.tar.gz $CATALINA_HOME/webapps/* $CATALINA_HOME/bin/*.bat \
-&& mkdir $CATALINA_HOME/webapps/ROOT \
+&& mkdir $CATALINA_HOME/webapps/ROOT 
 # 处理Tomcat启动慢问题（随机数产生器初始化过慢）
-&& sed -i "s#securerandom.source=file:/dev/random#securerandom.source=file:/dev/./urandom#g" $JAVA_HOME/lib/security/java.security
+#&& sed -i "s#securerandom.source=file:/dev/random#securerandom.source=file:/dev/./urandom#g" $JAVA_HOME/lib/security/java.security
  
 WORKDIR $CATALINA_HOME
 EXPOSE 8080
