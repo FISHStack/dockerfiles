@@ -31,7 +31,7 @@ RUN if [ -z "${RELEASE_TAG}" ]; then \
     mv -f ${RELEASE_TAG}-linux-${arch} ${OPENVSCODE_SERVER_ROOT} && \
     cp ${OPENVSCODE_SERVER_ROOT}/bin/remote-cli/openvscode-server ${OPENVSCODE_SERVER_ROOT}/bin/remote-cli/code && \
     rm -f ${RELEASE_TAG}-linux-${arch}.tar.gz && \
-    cd /home/workspace && \
+    cd ${OPENVSCODE_SERVER_ROOT} && \
     wget https://golang.google.cn/dl/go1.19.2.linux-amd64.tar.gz && \
     tar -xvf go1.19.1.linux-amd64.tar.gz && rm -f go1.19.1.linux-amd64.tar.gz && mkdir -p /home/workspace/gopath
 
