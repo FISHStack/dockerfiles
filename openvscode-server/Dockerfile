@@ -30,10 +30,11 @@ RUN if [ -z "${RELEASE_TAG}" ]; then \
     tar -xzf ${RELEASE_TAG}-linux-${arch}.tar.gz && \
     mv -f ${RELEASE_TAG}-linux-${arch} ${OPENVSCODE_SERVER_ROOT} && \
     cp ${OPENVSCODE_SERVER_ROOT}/bin/remote-cli/openvscode-server ${OPENVSCODE_SERVER_ROOT}/bin/remote-cli/code && \
-    rm -f ${RELEASE_TAG}-linux-${arch}.tar.gz
+    rm -f ${RELEASE_TAG}-linux-${arch}.tar.gz && \
+    cd /home/workspace && \
+    wget https://golang.google.cn/dl/go1.19.2.linux-amd64.tar.gz && \
+    tar -xvf go1.19.1.linux-amd64.tar.gz && rm -f go1.19.1.linux-amd64.tar.gz && mkdir -p /home/workspace/gopath
 
-COPY go1.19.1.linux-amd64.tar.gz /home/workspace/go1.19.1.linux-amd64.tar.gz
-RUN cd /home/workspace && ls && tar -xvf go1.19.1.linux-amd64.tar.gz && rm -f go1.19.1.linux-amd64.tar.gz && mkdir -p /home/workspace/gopath
 ENV GOPROXY=https://goproxy.cn 
 ENV GOPATH=/home/workspace/gopath 
 ENV GOROOT=/home/workspace/go 
