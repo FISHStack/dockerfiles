@@ -33,7 +33,7 @@ RUN if [ -z "${RELEASE_TAG}" ]; then \
     rm -f ${RELEASE_TAG}-linux-${arch}.tar.gz && \
     cd ${OPENVSCODE_SERVER_ROOT} && \
     wget https://golang.google.cn/dl/go1.19.2.linux-amd64.tar.gz && \
-    tar -xvf go1.19.1.linux-amd64.tar.gz && rm -f go1.19.1.linux-amd64.tar.gz && mkdir -p /home/workspace/gopath
+    tar -xvf go1.19.2.linux-amd64.tar.gz && rm -f go1.19.2.linux-amd64.tar.gz && mkdir -p /home/workspace/gopath
 
 ENV GOPROXY=https://goproxy.cn 
 ENV GOPATH=/home/workspace/gopath 
