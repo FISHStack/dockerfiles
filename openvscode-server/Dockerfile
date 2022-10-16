@@ -33,11 +33,12 @@ RUN if [ -z "${RELEASE_TAG}" ]; then \
     rm -f ${RELEASE_TAG}-linux-${arch}.tar.gz && \
     cd ${OPENVSCODE_SERVER_ROOT} && \
     wget https://golang.google.cn/dl/go1.19.2.linux-amd64.tar.gz && \
-    tar -xvf go1.19.2.linux-amd64.tar.gz && rm -f go1.19.2.linux-amd64.tar.gz && mkdir -p /home/workspace/gopath
+    tar -xvf go1.19.2.linux-amd64.tar.gz && rm -f go1.19.2.linux-amd64.tar.gz && mkdir -p ${OPENVSCODE_SERVER_ROOT}/gopath && \
+    ln -s ${OPENVSCODE_SERVER_ROOT}/go/bin/go /usr/local/bin/go
 
 ENV GOPROXY=https://goproxy.cn 
-ENV GOPATH=/home/workspace/gopath 
-ENV GOROOT=/home/workspace/go 
+ENV GOPATH=${OPENVSCODE_SERVER_ROOT}/gopath 
+ENV GOROOT=${OPENVSCODE_SERVER_ROOT}/go 
 
 ARG USERNAME=openvscode-server
 ARG USER_UID=1000
