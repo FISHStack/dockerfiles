@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: docker login 
-      run: docker login ghcr.io -u liangyuanpeng -p ${{ secrets.GITHUB_TOKEN }}
+      run: docker login ghcr.io -u liangyuanpeng -p ${{ secrets.TOKEN }}
     - name: Build the Docker image
       run: cd openvscode-server && docker build . --file Dockerfile --tag ghcr.io/liangyuanpeng/openvscode-server:go1.19 --build-arg RELEASE_TAG=openvscode-server-v1.72.2
 
